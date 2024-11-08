@@ -1,28 +1,36 @@
 import time
 import random as rd
+from multiprocessing import Process
+import tkinter as tk
 
 li = list(range(65260))
 flg = 0
 
-start = time.time()  # 現在時刻（処理開始前）を取得
-
-# 実行したい処理を記述
-
-end = time.time()  # 現在時刻（処理完了後）を取得
-
-time_diff = end - start  # 処理完了後の時刻から処理開始前の時刻を減算する
-print(time_diff)  # 処理にかかった時間データを使用
-
-start = time.time()
-rand = rd.randint(0,65259)
-
-for i in li[rand:]:
-    continue
-if flg == 0:
-    for i in li[:rand]:
+#ずっと動かすメイン抽選
+def roulette(self):
+    r = rd.randint(0,65259)
+    for i in li[r:]:
+        continue
+    for i in li[:r]:
         continue
 
-end = time.time()
+def key_event(e):
+    if e.keysym == "Down":
+        print("↓キーを押すと乱数取得する操作を書く")
 
-time_diff = end - start
-print(time_diff)
+#tkinterで状態や乱数、出玉などを表示する
+def output(self):
+    root = tk.Tk()
+    root.title("test")
+    root.geometry("500x500")
+    root.bind("<KeyPress>",key_event)
+    root.mainloop()
+
+#プロセスを動かす
+if __name__=="__main__":
+    p1 = Process(target=roulette, args=(1,))
+    p2 = Process(target=output, args=(2,))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
