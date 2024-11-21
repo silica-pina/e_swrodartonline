@@ -18,21 +18,33 @@ def roulette(n):
 
 
 #tkinterで状態や乱数、出玉などを表示する
+random = 0
 def output(n):#ここのｎが変わらんからこの方法では無理か？
+    global random
     def key_event(e,n):
+        global random
         if e.keysym == "Down":
-            print(n.value)#乱数表示
+            random = n.value
+            print(random)#乱数表示
+
+    def see_random():
+        global random
+        label1["text"] = random
+        root.after(1,see_random)
 
     def see_n():
-        label["text"] = n.value
+        label2["text"] = n.value
         root.after(1,see_n)
 
     root = tk.Tk()
     root.title("test")
     root.geometry("500x500")
     root.bind("<KeyPress>",lambda e:key_event(e,n))
-    label = tk.Label(font=("Ubunt Mono",160))
-    label.pack()
+    label1 = tk.Label(font=("Ubunt Mono",130))
+    label2 = tk.Label(font=("Ubunt Mono",130))
+    label1.pack()
+    label2.pack()
+    see_random()
     see_n()
     root.mainloop()
 
