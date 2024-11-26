@@ -134,7 +134,7 @@ def output(n):
                 time.sleep(1)
                 label3["text"] = "ST"
                 label5["text"] = "差玉：" + str(now)
-                label8["text"] = "連荘数" + str(ren)
+                label8["text"] = "連荘数：" + str(ren)
             else:
                 label3["text"] = "ハズレ"
                 label6["text"] = "残り:" + str(104-cnt)
