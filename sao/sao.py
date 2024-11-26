@@ -35,35 +35,34 @@ def output(n):
         global random,cnt,flg
         if e.keysym == "Down":
             random = n.value
-            print(flg,cnt)#乱数表示
             cnt += 1
             label4["text"] = "回転数：" + str(cnt)
             if flg == 0:
                 label7["text"] = "通常"
                 normal()
             elif flg == 1:
-                label7["text"] = "ST"
-                print("ラッシュ")
+                label7["text"] = "ST中"
                 rush()
             elif flg == 2:
-                label7["text"] = "時短"
-                print("時短")
+                label7["text"] = "時短中"
                 timeSaving()
             elif flg == 3:
-                label7["text"] = "cタイム時短"
-                print("c時短")
+                label7["text"] = "cタイム時短中"
                 c_timeSaving()
 
+    #サウンド
     def sound(mp3):
         pygame.mixer.init()
         pygame.mixer.music.load(mp3)
         pygame.mixer.music.play(1)
 
+    #自分が引いた乱数を表示
     def see_random():
         global random
         label1["text"] = random
         root.after(1,see_random)
 
+    #抽選機の乱数を表示
     def see_n():
         label2["text"] = n.value
         root.after(1,see_n)
@@ -79,7 +78,7 @@ def output(n):
             ren += 1
             label3["text"] = "ST"
             label5["text"] = "差玉：" + str(now)
-            label8["text"] = "連荘数" + str(ren)
+            label8["text"] = "連荘数：" + str(ren)
         elif random % 319 == 0 and (random/319)%2 == 1:
             flg = 2
             now += 410
@@ -87,7 +86,7 @@ def output(n):
             ren += 1
             label3["text"] = "時短"
             label5["text"] = "差玉：" + str(now)
-            label8["text"] = "連荘数" + str(ren)
+            label8["text"] = "連荘数：" + str(ren)
         else:
             now -= 15
             label3["text"] = "ハズレ"
@@ -104,7 +103,7 @@ def output(n):
                 time.sleep(1)
                 label3["text"] = "当たり"
                 label5["text"] = "差玉：" + str(now)
-                label8["text"] = "連荘数" + str(ren)
+                label8["text"] = "連荘数：" + str(ren)
             else:
                 label3["text"] = "ハズレ"
                 label6["text"] = "残り:" + str(159-cnt)
@@ -121,7 +120,7 @@ def output(n):
                 now -= 15
                 label3["text"] = "cタイム非当選"
                 label5["text"] = "差玉：" + str(now)
-                label8["text"] = "連荘数" + str(ren)
+                label8["text"] = "連荘数：" + str(ren)
 
     def timeSaving(): #時短
         global random,cnt,flg,now,ren,pFlash
@@ -142,7 +141,7 @@ def output(n):
         else:
             flg = 0
             ren = 0
-            label8["text"] = "連荘数" + str(ren)
+            label8["text"] = "連荘数：" + str(ren)
 
     def c_timeSaving(): #cタイム経由時短
         global random,cnt,flg,now,ren,pFlash
@@ -156,17 +155,17 @@ def output(n):
                 time.sleep(1)
                 label3["text"] = "ST"
                 label5["text"] = "差玉：" + str(now)
-                label8["text"] = "連荘数" + str(ren)
+                label8["text"] = "連荘数：" + str(ren)
             else:
                 label3["text"] = "ハズレ"
                 label6["text"] = "残り:" + str(115-cnt)
         else:
             flg = 0
             ren = 0
-            label8["text"] = "連荘数" + str(ren)
+            label8["text"] = "連荘数：" + str(ren)
 
     root = tk.Tk()
-    root.title("test")
+    root.title("eSwordArtOnline ↓キーで抽選")
     root.geometry("800x1000")
     root.bind("<KeyPress>",lambda e:key_event(e,n))
     label1 = tk.Label(font=("Ubunt Mono",100))
@@ -185,10 +184,6 @@ def output(n):
     label6.pack()
     label7.pack()
     label8.pack()
-    '''
-    if cnt == 0:
-        label4["text"] = cnt
-        '''
     see_random()
     see_n()
     root.mainloop()
