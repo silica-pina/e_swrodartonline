@@ -51,10 +51,10 @@ def output(n):
                 c_timeSaving()
 
     #サウンド
+    pygame.mixer.init()
+    beep = pygame.mixer.Sound(pFlash)  # Sound に変える
     def sound(mp3):
-        pygame.mixer.init()
-        pygame.mixer.music.load(mp3)
-        pygame.mixer.music.play(1)
+        beep.play()
 
     #自分が引いた乱数を表示
     def see_random():
@@ -71,7 +71,6 @@ def output(n):
         global random,cnt,flg,now,ren,pFlash
         if random % 319 == 0 and (random/319)%2 == 0:
             sound(pFlash)
-            time.sleep(1)
             flg = 1
             now += 410
             cnt = 0
@@ -100,7 +99,6 @@ def output(n):
                 cnt = 0
                 ren += 1
                 sound(pFlash)
-                time.sleep(1)
                 label3["text"] = "当たり"
                 label5["text"] = "差玉：" + str(now)
                 label8["text"] = "連荘数：" + str(ren)
@@ -131,7 +129,6 @@ def output(n):
                 ren += 1
                 now += 1380
                 sound(pFlash)
-                time.sleep(1)
                 label3["text"] = "ST"
                 label5["text"] = "差玉：" + str(now)
                 label8["text"] = "連荘数：" + str(ren)
@@ -152,7 +149,6 @@ def output(n):
                 ren += 1
                 now += 1380
                 sound(pFlash)
-                time.sleep(1)
                 label3["text"] = "ST"
                 label5["text"] = "差玉：" + str(now)
                 label8["text"] = "連荘数：" + str(ren)
