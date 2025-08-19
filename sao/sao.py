@@ -61,10 +61,10 @@ def output(n):
             case 0: #通常
                 if x <= 70:
                     beep.play()
-            case 1:
+            case 1: #ST
                 if x <= 95:
                     beep.play()
-            case 2 | 3:
+            case 2 | 3: #時短系
                 if x <= 80:
                     beep.play()
 
