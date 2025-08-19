@@ -1,3 +1,4 @@
+from http.client import SWITCHING_PROTOCOLS
 import time
 import random as rd
 from multiprocessing import Process, Value
@@ -8,6 +9,9 @@ import pygame
 #音源
 pFlash = "pフラ.mp3"
 
+#サウンド
+pygame.mixer.init()
+beep = pygame.mixer.Sound(pFlash)
 
 #乱数
 li = list(range(64620))
@@ -51,16 +55,18 @@ def output(n):
                 c_timeSaving()
 
     #サウンド
-    pygame.mixer.init()
-    beep = pygame.mixer.Sound(pFlash)  # Sound に変える
-    def sound(mp3):
-        beep.play()
-
-    #自分が引いた乱数を表示
-    def see_random():
-        global random
-        label1["text"] = random
-        root.after(1,see_random)
+    def sound(flg):
+        x = rd.randint(1,100)
+        match flg:
+            case 0: #通常
+                if x <= 70:
+                    beep.play()
+            case 1:
+                if x <= 95:
+                    beep.play()
+            case 2 | 3:
+                if x <= 80:
+                    beep.play()
 
     #抽選機の乱数を表示
     def see_n():
@@ -70,7 +76,7 @@ def output(n):
     def normal(): #通常
         global random,cnt,flg,now,ren,pFlash
         if random % 319 == 0 and (random/319)%2 == 0:
-            sound(pFlash)
+            sound(flg)
             flg = 1
             now += 410
             cnt = 0
@@ -98,7 +104,7 @@ def output(n):
                 now += 1380
                 cnt = 0
                 ren += 1
-                sound(pFlash)
+                sound(flg)
                 label3["text"] = "当たり"
                 label5["text"] = "差玉：" + str(now)
                 label8["text"] = "連荘数：" + str(ren)
@@ -128,7 +134,7 @@ def output(n):
                 cnt = 0
                 ren += 1
                 now += 1380
-                sound(pFlash)
+                sound(flg)
                 label3["text"] = "ST"
                 label5["text"] = "差玉：" + str(now)
                 label8["text"] = "連荘数：" + str(ren)
@@ -148,7 +154,7 @@ def output(n):
                 cnt = 0
                 ren += 1
                 now += 1380
-                sound(pFlash)
+                sound(flg)
                 label3["text"] = "ST"
                 label5["text"] = "差玉：" + str(now)
                 label8["text"] = "連荘数：" + str(ren)
@@ -162,9 +168,8 @@ def output(n):
 
     root = tk.Tk()
     root.title("eSwordArtOnline ↓キーで抽選")
-    root.geometry("800x1000")
+    root.geometry("800x900")
     root.bind("<KeyPress>",lambda e:key_event(e,n))
-    label1 = tk.Label(font=("Ubunt Mono",100))
     label2 = tk.Label(font=("Ubunt Mono",100))
     label3 = tk.Label(font=("Ubunt Mono",100))
     label4 = tk.Label(font=("Ubunt Mono",80)) #回転数
@@ -172,7 +177,6 @@ def output(n):
     label6 = tk.Label(font=("Ubunt Mono",80)) #STや時短の残り回転数
     label7 = tk.Label(font=("Ubunt Mono",80)) #状態
     label8 = tk.Label(font=("Ubunt Mono",80)) #連荘数
-    label1.pack()
     label2.pack()
     label3.pack()
     label4.pack()
@@ -180,7 +184,6 @@ def output(n):
     label6.pack()
     label7.pack()
     label8.pack()
-    see_random()
     see_n()
     root.mainloop()
 
